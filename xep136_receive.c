@@ -24,7 +24,7 @@ print_r_collection(RetrieveCollection *curr)
     //g_list_foreach(curr->coll, (GFunc) print_r_collection, NULL);
     gchar *text;
     text = g_strdup_printf("#################### start %s with %s num %d\n", curr->start, curr->with, g_list_length(curr->to_retrieve));
-    purple_debug_misc(PLUGIN_ID, text);
+    purple_debug_misc(PLUGIN_ID, "%s", text);
     g_free(text);
 }
 
@@ -174,7 +174,6 @@ iq_retrieve_body(WindowStruct *curr, xmlnode *c, xmlnode *d, gchar *secs, gchar 
 static void
 iq_retrieve(WindowStruct *curr, xmlnode *xml)
 {
-    GtkTreeIter iter;
     xmlnode *c = NULL;
     xmlnode *d = NULL;
     //char *data = NULL;
@@ -284,7 +283,7 @@ iq_list(WindowStruct *curr, xmlnode *xml)
 
 	    /* save collection with raw date */
 	    text = g_strdup_printf("############### add_collection :: start %s :: with %s\n", start, with);
-	    purple_debug_misc(PLUGIN_ID, text);
+	    purple_debug_misc(PLUGIN_ID, "%s", text);
 
 	    add_collection(curr, (gchar *) start, (gchar *) with);
 

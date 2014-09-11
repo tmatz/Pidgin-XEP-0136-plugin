@@ -57,7 +57,7 @@ get_my_username(PidginConversation *gtkconv)
     PurpleAccount *acc = purple_conv->account;
     char *username= acc->username;
 
-    gchar *my_username = NULL;;
+    gchar *my_username = NULL;
     gchar *lom = NULL; //pointer to '/'
     glong dlzka = 0;
 
