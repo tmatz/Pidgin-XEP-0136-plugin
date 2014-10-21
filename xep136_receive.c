@@ -24,7 +24,7 @@ print_r_collection(RetrieveCollection *curr)
     //g_list_foreach(curr->coll, (GFunc) print_r_collection, NULL);
     gchar *text;
     text = g_strdup_printf("#################### start %s with %s num %d\n", curr->start, curr->with, g_list_length(curr->to_retrieve));
-    purple_debug_misc(PLUGIN_ID, text);
+    purple_debug_misc(PLUGIN_ID, "%s", text);
     g_free(text);
 }
 
@@ -136,13 +136,20 @@ iq_retrieve_body(WindowStruct *curr, xmlnode *c, xmlnode *d, gchar *secs, gchar 
 
 	    /* create line to imhtml */
 	    if (text) {
+		const gchar *nickname = xmlnode_get_attrib(c, "name");
+		const gchar *jid = xmlnode_get_attrib(c, "jid");
+
 		if (strcmp(c->name, "from") == 0) {
+                    const gchar *name = (nickname)? nickname : ((jid) ? jid : friends_username);
+
 		    //from_to = g_strdup_printf("<b><font color='#ff0000'>%s</font></b>", get_my_username(curr->gtkconv));
-		    from_to = g_strdup_printf("<b><font color='#0000ff'>%s</font></b>", friends_username);
+		    from_to = g_strdup_printf("<b><font color='#0000ff'>%s</font></b>", name);
 		    //from_to = g_strdup_printf("<b><font color='#ff0000'>%s</font></b>", "from");
 		} else {
+                    const gchar *name = (nickname)? nickname : my_username;
+
 		    //from_to = g_strdup_printf("<b><font color='#0000ff'>%s</font></b>", get_friend_username(curr->gtkconv));
-		    from_to = g_strdup_printf("<b><font color='#ff0000'>%s</font></b>", my_username);
+		    from_to = g_strdup_printf("<b><font color='#ff0000'>%s</font></b>", name);
 		    //from_to = g_strdup_printf("<b><font color='#0000ff'>%s</font></b>", "to");
 		}
 
@@ -174,7 +181,6 @@ iq_retrieve_body(WindowStruct *curr, xmlnode *c, xmlnode *d, gchar *secs, gchar 
 static void
 iq_retrieve(WindowStruct *curr, xmlnode *xml)
 {
-    GtkTreeIter iter;
     xmlnode *c = NULL;
     xmlnode *d = NULL;
     //char *data = NULL;
@@ -284,7 +290,7 @@ iq_list(WindowStruct *curr, xmlnode *xml)
 
 	    /* save collection with raw date */
 	    text = g_strdup_printf("############### add_collection :: start %s :: with %s\n", start, with);
-	    purple_debug_misc(PLUGIN_ID, text);
+	    purple_debug_misc(PLUGIN_ID, "%s", text);
 
 	    add_collection(curr, (gchar *) start, (gchar *) with);
 
