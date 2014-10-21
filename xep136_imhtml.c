@@ -119,5 +119,5 @@ imhtml_text_save_message(WindowStruct *curr, gchar *imhtml_message, gchar *secs,
 	return;
     }
 
-    curr->imhtml_list = g_list_prepend(curr->imhtml_list, new);
+    curr->imhtml_list = g_list_append(curr->imhtml_list, new);
 }
