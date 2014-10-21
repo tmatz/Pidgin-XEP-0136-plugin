@@ -136,13 +136,20 @@ iq_retrieve_body(WindowStruct *curr, xmlnode *c, xmlnode *d, gchar *secs, gchar 
 
 	    /* create line to imhtml */
 	    if (text) {
+		const gchar *nickname = xmlnode_get_attrib(c, "name");
+		const gchar *jid = xmlnode_get_attrib(c, "jid");
+
 		if (strcmp(c->name, "from") == 0) {
+                    const gchar *name = (nickname)? nickname : ((jid) ? jid : friends_username);
+
 		    //from_to = g_strdup_printf("<b><font color='#ff0000'>%s</font></b>", get_my_username(curr->gtkconv));
-		    from_to = g_strdup_printf("<b><font color='#0000ff'>%s</font></b>", friends_username);
+		    from_to = g_strdup_printf("<b><font color='#0000ff'>%s</font></b>", name);
 		    //from_to = g_strdup_printf("<b><font color='#ff0000'>%s</font></b>", "from");
 		} else {
+                    const gchar *name = (nickname)? nickname : my_username;
+
 		    //from_to = g_strdup_printf("<b><font color='#0000ff'>%s</font></b>", get_friend_username(curr->gtkconv));
-		    from_to = g_strdup_printf("<b><font color='#ff0000'>%s</font></b>", my_username);
+		    from_to = g_strdup_printf("<b><font color='#ff0000'>%s</font></b>", name);
 		    //from_to = g_strdup_printf("<b><font color='#0000ff'>%s</font></b>", "to");
 		}
 
